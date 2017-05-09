@@ -50,7 +50,6 @@ post '/take-survey/:id/submit' do
     values[i].store('question_id',question_ids[i]['question_id'])
   end
   Result.create(values)
-  binding.pry
   redirect '/'
 end
 
