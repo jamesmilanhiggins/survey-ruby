@@ -1,0 +1,18 @@
+<h2><%= @survey.title %></h2>
+<form action="/surveys/<%= @survey.id %>/add-question" method="post">
+  <label for="question">Question:</label>
+  <input class="form-control" type="text" name="question" id="question">
+  <button type="submit" class="btn btn-success">Add Question</button>
+</form>
+
+
+<h3>Questions</h3>
+<form action="/surveys/<%= @survey.id %>/submit" method="post">
+  <ol>
+    <% @survey.questions.each do |question| %>
+      <li><%= question.content %></li>
+      <input class="form-control" type="text" name="result[][<%= question.id %>-answer]" placeholder="Your Answer">
+    <% end %>
+  </ol>
+  <button type="submit" class="btn btn-success">Submit Answers</button>
+</form>
