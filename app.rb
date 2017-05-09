@@ -14,6 +14,12 @@ get '/' do
   erb :index
 end
 
+get '/take-survey/:id' do
+  survey_id = params['id']
+  @survey = Survey.find(survey_id)
+  erb :take_survey
+end
+
 get '/surveys/new' do
   erb :new_survey
 end
@@ -30,25 +36,34 @@ get '/surveys/:id' do
   erb :survey
 end
 
-post '/surveys/:id/submit' do
-  # survey_id = params['id']
-  # @survey = Survey.find(survey_id)
-  # results = params['result']
-  # question_ids = params['question_id']
-  # test = []
-  # results.each do |result|
-  #   result.store("survey_id", survey_id)
-  #   test.push(result)
-  # end
-  # question_ids.each do |hash|
-  #   hash.each do |k,v|
-  #     test.each do |hash|
-  #       hash.store("question_id", v)
-  #     end
-  #   end
-  # end
-  # new_result = Result.create(results)
-  erb :survey
+post '/take-survey/:id/submit' do
+  survey_id = params['id']
+  @survey = Survey.find(survey_id)
+  results = params['result']
+  question_ids = params['question_id']
+  values = []
+  results.each do |result|
+    result.store("survey_id", survey_id)
+    values.push(result)
+  end
+  results.length.times do |i|
+    values[i].store('question_id',question_ids[i]['question_id'])
+  end
+  Result.create(values)
+  redirect '/'
+end
+
+delete('/surveys/:id/delete') do
+  id = params['id']
+  Survey.destroy(id)
+  redirect '/'
+end
+
+delete('/surveys/:id/delete-question') do
+  id = params['id']
+  question_id = params['question-id'].to_i
+  Question.destroy(question_id)
+  redirect "/surveys/#{id}"
 end
 
 post '/surveys/:id/add-question' do

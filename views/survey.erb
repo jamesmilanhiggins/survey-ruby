@@ -7,13 +7,24 @@
 
 
 <h3>Questions</h3>
-<form action="/surveys/<%= @survey.id %>/submit" method="post">
-  <ol>
-    <% @survey.questions.each do |question| %>
-      <li><%= question.content %></li>
-      <input class="form-control" type="text" name="result[][answer]" placeholder="Your Answer">
-      <input type="hidden" name="question_id[][question_id]" value="<%= question.id %>">
-    <% end %>
-  </ol>
-  <button type="submit" class="btn btn-success">Submit Answers</button>
+<ol>
+  <% @survey.questions.each do |question| %>
+    <li><%= question.content %></li>
+  <% end %>
+</ol>
+
+<h3>Past Results</h3>
+<% Question.where(survey_id: @survey.id).each do |question| %>
+  <h3><%= question.content %></h3>
+  <% Result.where(question_id: question.id).each do |answer| %>
+  <ul>
+    <li><%= answer.answer %></li>
+  </ul>
+  <% end %>
+<% end %>
+
+<form action="/surveys/<%= @survey.id %>/delete" method="post">
+  <input type="hidden" name="_method" value="delete">
+  <button class="btn btn-danger" type="submit">Delete Survey</button>
 </form>
+<a href="/" class="btn btn-info">Back</a>

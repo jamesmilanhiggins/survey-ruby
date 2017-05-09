@@ -1,7 +1,6 @@
 <a href="/surveys/new" class="btn btn-primary">Create Survey</a>
 <h2>All Surveys</h2>
-<ul>
-  <% @all_surveys.each do |survey| %>
-    <li><a href="/surveys/<%= survey.id %>"><%= survey.title %></a></li>
-  <% end %>
-</ul>
+
+<% @all_surveys.each do |survey| %>
+  <h2><%= survey.title %><a class="survey-controls btn btn-info" href="/surveys/<%= survey.id %>">edit survey</a><a class="survey-controls btn btn-warning" href="/take-survey/<%= survey.id %>">take survey</a></h2>
+<% end %>
