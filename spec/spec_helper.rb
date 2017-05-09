@@ -5,7 +5,8 @@ require "pg"
 require "pry"
 require "sinatra/activerecord"
 require "survey"
-require "content"
+require "question"
+require "result"
 
 # RSpec.configure do |config|
 #   config.after(:each) do

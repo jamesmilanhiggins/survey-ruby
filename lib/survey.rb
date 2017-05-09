@@ -1,6 +1,8 @@
 class Survey < ActiveRecord::Base
-  has_many(:contents)
+  has_many(:questions)
+  has_many(:results)
   before_save :make_title_case
+  validates(:title, presence: true)
 
   private
 
