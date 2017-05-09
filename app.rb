@@ -31,9 +31,23 @@ get '/surveys/:id' do
 end
 
 post '/surveys/:id/submit' do
-  survey_id = params['id']
-  @survey = Survey.find(survey_id)
-  binding.pry
+  # survey_id = params['id']
+  # @survey = Survey.find(survey_id)
+  # results = params['result']
+  # question_ids = params['question_id']
+  # test = []
+  # results.each do |result|
+  #   result.store("survey_id", survey_id)
+  #   test.push(result)
+  # end
+  # question_ids.each do |hash|
+  #   hash.each do |k,v|
+  #     test.each do |hash|
+  #       hash.store("question_id", v)
+  #     end
+  #   end
+  # end
+  # new_result = Result.create(results)
   erb :survey
 end
 
