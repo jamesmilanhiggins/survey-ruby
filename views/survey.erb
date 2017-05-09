@@ -1,30 +1,38 @@
-<h2><%= @survey.title %></h2>
+<h1><%= @survey.title %></h1>
 <form action="/surveys/<%= @survey.id %>/add-question" method="post">
   <label for="question">Question:</label>
   <input class="form-control" type="text" name="question" id="question">
   <button type="submit" class="btn btn-success">Add Question</button>
 </form>
 
+<div class="survey-section">
+  <h1>Questions</h1>
+  <ol id="questions-list">
+    <% @survey.questions.each do |question| %>
+      <li><%= question.content %></li>
+      <form action="/surveys/<%= @survey.id %>/delete-question" method="post">
+        <input type="hidden" name="_method" value="delete">
+        <input type="hidden" name="question-id" value="<%= question.id %>">
+        <button class="btn btn-danger" type="submit">Delete Question</button>
+      </form>
+    <% end %>
+  </ol>
+</div>
 
-<h3>Questions</h3>
-<ol>
-  <% @survey.questions.each do |question| %>
-    <li><%= question.content %></li>
+<div class="survey-section">
+  <h1>Past Results</h1>
+  <% Question.where(survey_id: @survey.id).each do |question| %>
+    <h3><%= question.content %></h3>
+    <% Result.where(question_id: question.id).each do |answer| %>
+    <ul>
+      <li><%= answer.answer %></li>
+    </ul>
+    <% end %>
   <% end %>
-</ol>
-
-<h3>Past Results</h3>
-<% Question.where(survey_id: @survey.id).each do |question| %>
-  <h3><%= question.content %></h3>
-  <% Result.where(question_id: question.id).each do |answer| %>
-  <ul>
-    <li><%= answer.answer %></li>
-  </ul>
-  <% end %>
-<% end %>
+</div>
 
 <form action="/surveys/<%= @survey.id %>/delete" method="post">
+  <a href="/" class="btn btn-info">Back</a>
   <input type="hidden" name="_method" value="delete">
   <button class="btn btn-danger" type="submit">Delete Survey</button>
 </form>
-<a href="/" class="btn btn-info">Back</a>

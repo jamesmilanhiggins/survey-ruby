@@ -50,6 +50,7 @@ post '/take-survey/:id/submit' do
     values[i].store('question_id',question_ids[i]['question_id'])
   end
   Result.create(values)
+  binding.pry
   redirect '/'
 end
 
@@ -61,7 +62,7 @@ end
 
 delete('/surveys/:id/delete-question') do
   id = params['id']
-  question_id = params['question-id'].to_i
+  question_id = params['question-id']
   Question.destroy(question_id)
   redirect "/surveys/#{id}"
 end

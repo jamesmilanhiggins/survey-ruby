@@ -1,3 +1,11 @@
 .survey-controls {
   margin-left: 10px;
 }
+
+#questions-list {
+  font-size: 25px;
+}
+
+.survey-section {
+  padding: 50px 0;
+}
