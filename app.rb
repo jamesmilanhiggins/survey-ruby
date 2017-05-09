@@ -5,7 +5,6 @@ require "./lib/survey"
 require "./lib/question"
 require "./lib/result"
 require "pry"
-enable :sessions
 
 also_reload "lib/**/*.rb"
 
